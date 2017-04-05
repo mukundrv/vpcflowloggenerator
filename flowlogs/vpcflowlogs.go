@@ -1,11 +1,9 @@
 package flowlogs
 
 import (
-	//	"encoding/json"
 	"fmt"
 	"math/rand"
 	"strconv"
-	//	"strings"
 	"time"
 )
 
@@ -27,7 +25,6 @@ type Vpcflowlog struct {
 	Status      string
 }
 
-//svc := s3.New(sess, &aws.Config{Region: aws.String(region)})
 var r = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 var account []string
@@ -53,34 +50,18 @@ var ParseFailures uint64
 }
 */
 
-func Test() {
-	//fmt.Println("test")
-	//fmt.Println(account)
-	//fmt.Println(&account)
-	//fmt.Println(account)
-
-	//fmt.Println(pickAccount())
-}
 
 func main() {
 
-	//Test()
-	//return
 
 	fmt.Println("Main  Start ")
 
 	x := GenerateVPCLogData(1)
 	fmt.Println(x)
-	//pushDatatoKinesis()
 
 	fmt.Println("Main End")
 }
 
-func pushDatatoKinesis() {
-	fmt.Println("Kinesis Push Start")
-
-	fmt.Println("Kinesis Push End")
-}
 
 func init() {
 	fmt.Println("init")
@@ -93,17 +74,10 @@ func init() {
 	destport = generateString(1000, 0, 65536)
 	protocol = []string{"6", "17"}
 	action = []string{"ACCEPT", "REJECT"}
-	//flowlogstatus = []string{"OK"}
-
-	//fmt.Println("Start", time.Now().UnixNano())
-
-	//fmt.Println("Stop", time.Now().UnixNano())
 
 }
 
-//func GenerateVPCLogData(N int) *[]Vpcflowlog {
 func GenerateVPCLogData(N int) []Vpcflowlog {
-	//fmt.Println("Generate VPC LogData - Start")
 
 	t := time.Now()
 
@@ -112,10 +86,6 @@ func GenerateVPCLogData(N int) []Vpcflowlog {
 		_ = elapsed
 		//fmt.Println("Elapsed time ", elapsed)
 	}()
-	//start := time.Now().UnixNano()
-	//fmt.Println("Start", start)
-	//var v []Vpcflowlog
-	//v := make([]Vpcflowlog, N)
 	v := make([]Vpcflowlog, N)
 
 	for i := 0; i < N; i += 1 {
@@ -125,7 +95,6 @@ func GenerateVPCLogData(N int) []Vpcflowlog {
 		vx.Version = "2"
 		vx.Account = pickAccount()
 		vx.Eni = pickENI()
-		//fmt.Println(vx.Eni)
 		vx.Source = pickString(source)
 		vx.Destination = pickString(destination)
 		vx.Srcport = pickString(srcport)
@@ -145,10 +114,6 @@ func GenerateVPCLogData(N int) []Vpcflowlog {
 		//v = append(v, vx)
 		//fmt.Println(vx)
 	}
-	//end := time.Now().UnixNano()
-	//fmt.Println("end", end)
-	//fmt.Println("Diff", (end - start))
-	//fmt.Println("Generate VPC LogData - End")
 
 	return v[:]
 
@@ -158,36 +123,29 @@ var f interface{}
 
 func getID() string {
 
-	//x := (strconv.FormatInt(r.Int63n(255), 57))
 	x := strconv.FormatInt(time.Now().UnixNano(), 10)
 	return x
 }
 
 func generateAccount(N int) []string {
 
-	//r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	const nums = "0123456789"
 	res := make([]string, N)
 
 	for i := 0; i < N; i += 1 {
 		r2 := make([]byte, 12)
 		for j := range r2 {
-			//r2[j] = nums[r.Int63()%int64(len(nums))]
 			r2[j] = nums[rand.Intn(len(nums))]
 		}
 		res[i] = string(r2)
-		//fmt.Println(string(r2))
 
 	}
-
-	//fmt.Println(res)
 
 	return res
 }
 
 func generateENI(N int) []string {
 
-	//r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	const chars = "abcdefghijklmnopqrstuvwxyz"
 	const nums = "0123456789"
 
