@@ -347,6 +347,7 @@ func ingestRecords(sess *session.Session, wg *sync.WaitGroup, p string, streamNa
 		v := flowlogs.GenerateVPCLogData(batchSize)
 		tx := time.Since(t2)
 
+		putRecords(sess, v, p, streamName)
 		//GraphiteCount("go.kp.count", len(v))
 		atomic.AddInt64(&totalSize, int64(len(v)))
 		StatCount("go.kp.batchProcessed", len(v))
